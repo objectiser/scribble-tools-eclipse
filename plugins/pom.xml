@@ -5,13 +5,13 @@
 	<groupId>org.scribble.tools</groupId>
 	<artifactId>plugins</artifactId>
 	<packaging>pom</packaging>
-	<version>2.0.0.20110303-M4</version>
+	<version>2.0.0-SNAPSHOT</version>
 	<name>Scribble::Tools::Plugins</name>
 
 	<parent>
 		<groupId>org.scribble</groupId>
 		<artifactId>tools</artifactId>
-		<version>2.0.0.20110303-M4</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 
 	<modules>
