@@ -1,0 +1,55 @@
+<project
+xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion> 
+	<groupId>org.scribble.tools</groupId>
+	<artifactId>site</artifactId> 
+	<version>2.0.0.20110303-M4</version>
+	<packaging>eclipse-update-site</packaging>
+	<name>Scribble::Tools::Site</name>
+
+	<parent>
+		<groupId>org.scribble</groupId>
+		<artifactId>tools</artifactId>
+		<version>2.0.0.20110303-M4</version>
+	</parent>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.scribble.bundles</groupId>
+      <artifactId>org.scribble.common</artifactId>
+      <version>${scribble.bundles.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scribble.bundles</groupId>
+      <artifactId>org.scribble.protocol</artifactId>
+      <version>${scribble.bundles.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scribble.bundles</groupId>
+      <artifactId>org.scribble.protocol.parser</artifactId>
+      <version>${scribble.bundles.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scribble.bundles</groupId>
+      <artifactId>org.scribble.protocol.monitor</artifactId>
+      <version>${scribble.bundles.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scribble.bundles</groupId>
+      <artifactId>org.scribble.protocol.export.monitor</artifactId>
+      <version>${scribble.bundles.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scribble.bundles</groupId>
+      <artifactId>org.scribble.protocol.projection</artifactId>
+      <version>${scribble.bundles.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.scribble.runtime.cli</groupId>
+      <artifactId>scribble-commands</artifactId>
+      <version>${scribble.bundles.version}</version>
+    </dependency>
+  </dependencies>
+
+</project>
+

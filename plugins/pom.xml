@@ -1,0 +1,22 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.scribble.tools</groupId>
+	<artifactId>plugins</artifactId>
+	<packaging>pom</packaging>
+	<version>2.0.0.20110303-M4</version>
+	<name>Scribble::Tools::Plugins</name>
+
+	<parent>
+		<groupId>org.scribble</groupId>
+		<artifactId>tools</artifactId>
+		<version>2.0.0.20110303-M4</version>
+	</parent>
+
+	<modules>
+		<module>org.scribble.protocol.designer</module>
+	</modules>
+	
+</project>
+
