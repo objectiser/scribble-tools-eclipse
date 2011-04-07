@@ -1,0 +1,23 @@
+Scribble Tools for Eclipse
+==========================
+
+
+
+Building from source
+--------------------
+
+First task is to obtain and build the parent pom used by jbosstools.
+
+Create a suitable folder and run:
+
+	svn co http://anonsvn.jboss.org/repos/jbosstools/branches/3.3.indigo/build/
+
+Then go to the 'build' folder and run:
+
+	mvn clean install
+
+This will only need to be done first time, or when the local maven repository is cleared out. In the future this parent pom may be added to a central maven repository, so that this step is no longer required.
+
+The next step is to go to the root folder of the scribble-tools-eclipse repository, and run:
+
+	
