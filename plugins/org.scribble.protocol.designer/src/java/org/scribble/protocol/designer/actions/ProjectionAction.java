@@ -31,6 +31,7 @@ import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 import org.scribble.common.logging.CachedJournal;
 import org.scribble.common.resource.DefaultResourceLocator;
+import org.scribble.common.resource.FileContent;
 import org.scribble.protocol.DefaultProtocolContext;
 import org.scribble.protocol.designer.DesignerServices;
 import org.scribble.protocol.designer.osgi.Activator;
@@ -58,13 +59,10 @@ public class ProjectionAction implements IObjectActionDelegate {
 				try {
 					CachedJournal journal=new CachedJournal();
 					
-					java.io.InputStream is=((IFile)res).getContents();
-			
-					model = DesignerServices.getParserManager().parse(((IFile)res).getFileExtension(),
-												is, journal, null);
-			
-					is.close();
+					FileContent content=new FileContent(((IFile)res).getProjectRelativePath().toFile());
 					
+					model = DesignerServices.getParserManager().parse(content, journal, null);
+			
 					if (model == null || journal.hasErrors()) {
 						error("Cannot project '"+((IFile)res).getName()+"' due to errors", null);
 					} else if (model.isLocated()) {
