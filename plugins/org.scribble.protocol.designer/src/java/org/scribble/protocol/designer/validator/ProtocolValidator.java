@@ -21,6 +21,7 @@ import org.eclipse.core.resources.IResource;
 //import org.eclipse.core.runtime.IProgressMonitor;
 //import org.eclipse.wst.validation.ValidationResult;
 //import org.eclipse.wst.validation.ValidationState;
+import org.scribble.common.resource.FileContent;
 import org.scribble.protocol.designer.DesignerServices;
 import org.scribble.protocol.designer.logger.EclipseScribbleLogger;
 import org.scribble.protocol.model.ProtocolModel;
@@ -50,11 +51,10 @@ public class ProtocolValidator {
 			EclipseScribbleLogger logger=
 					new EclipseScribbleLogger((IFile)res);
 			
-			java.io.InputStream is=((IFile)res).getContents();
+			FileContent content=new FileContent(((IFile)res).getProjectRelativePath().toFile());
 			
 			ProtocolModel model=
-				DesignerServices.getParserManager().parse(((IFile)res).getFileExtension(), is,
-						logger, null);
+				DesignerServices.getParserManager().parse(content, logger, null);
 			
 			// TODO: Check if error occurred during parsing
 			// possibly by using a logger proxy that counts
