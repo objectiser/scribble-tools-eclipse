@@ -100,7 +100,7 @@ public class Activator extends AbstractUIPlugin {
 		// SCRIBBLE-29
 		
 		ProtocolValidationManager vm=new DefaultProtocolValidationManager();
-		vm.addValidator(new org.scribble.protocol.validation.rules.DefaultProtocolComponentValidator());
+		vm.getValidators().add(new org.scribble.protocol.validation.rules.DefaultProtocolComponentValidator());
 		
 		DesignerServices.setValidationManager(vm);
 		
@@ -180,8 +180,8 @@ public class Activator extends AbstractUIPlugin {
 		
 		// Create the export manager
 		DesignerServices.setProtocolExportManager(ProtocolExportManagerFactory.getExportManager());
-		ProtocolExportManagerFactory.getExportManager().addExporter(new TextProtocolExporter());
-		ProtocolExportManagerFactory.getExportManager().addExporter(new MonitorProtocolExporter());
+		ProtocolExportManagerFactory.getExportManager().getExporters().add(new TextProtocolExporter());
+		ProtocolExportManagerFactory.getExportManager().getExporters().add(new MonitorProtocolExporter());
 		
 		// Register protocol monitor
 		sr=context.getServiceReference(ProtocolMonitor.class.getName());
