@@ -105,7 +105,7 @@ public class Activator extends AbstractUIPlugin {
 		DesignerServices.setValidationManager(vm);
 		
 		// Obtain reference to protocol parser
-		ServiceReference sr=context.getServiceReference(ProtocolParserManager.class.getName());
+		ServiceReference<?> sr=context.getServiceReference(ProtocolParserManager.class.getName());
 	
 		ProtocolParserManager pp=null;
 		
@@ -119,7 +119,7 @@ public class Activator extends AbstractUIPlugin {
 			
 	        ServiceListener sl1 = new ServiceListener() {
 	        	public void serviceChanged(ServiceEvent ev) {
-	        		ServiceReference sr = ev.getServiceReference();
+	        		ServiceReference<?> sr = ev.getServiceReference();
 	        		switch(ev.getType()) {
 	        		case ServiceEvent.REGISTERED:
 	        			ProtocolParserManager pp=
@@ -156,7 +156,7 @@ public class Activator extends AbstractUIPlugin {
 			
 	        ServiceListener sl1 = new ServiceListener() {
 	        	public void serviceChanged(ServiceEvent ev) {
-	        		ServiceReference sr = ev.getServiceReference();
+	        		ServiceReference<?> sr = ev.getServiceReference();
 	        		switch(ev.getType()) {
 	        		case ServiceEvent.REGISTERED:
 	        			ProtocolProjector ppj=
@@ -198,7 +198,7 @@ public class Activator extends AbstractUIPlugin {
 			
 	        ServiceListener sl1 = new ServiceListener() {
 	        	public void serviceChanged(ServiceEvent ev) {
-	        		ServiceReference sr = ev.getServiceReference();
+	        		ServiceReference<?> sr = ev.getServiceReference();
 	        		switch(ev.getType()) {
 	        		case ServiceEvent.REGISTERED:
 	        			ProtocolMonitor pm=

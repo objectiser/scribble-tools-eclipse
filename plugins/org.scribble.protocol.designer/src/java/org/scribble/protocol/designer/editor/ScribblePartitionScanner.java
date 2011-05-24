@@ -82,14 +82,13 @@ public class ScribblePartitionScanner extends RuleBasedPartitionScanner {
 	/**
 	 * Creates the partitioner and sets up the appropriate rules.
 	 */
-	@SuppressWarnings("unchecked")
 	public ScribblePartitionScanner() {
 		super();
 
 		IToken javaDoc= new Token(JAVA_DOC);
 		IToken comment= new Token(SCRIBBLE_MULTILINE_COMMENT);
 
-		List rules= new ArrayList();
+		List<Object> rules= new ArrayList<Object>();
 
 		// Add rule for single line comments.
 		rules.add(new EndOfLineRule("//", Token.UNDEFINED)); //$NON-NLS-1$
