@@ -17,7 +17,6 @@ package org.scribble.protocol.designer;
 
 import org.scribble.protocol.export.ProtocolExportManager;
 import org.scribble.protocol.monitor.ProtocolMonitor;
-import org.scribble.protocol.parser.ProtocolParser;
 import org.scribble.protocol.parser.ProtocolParserManager;
 import org.scribble.protocol.projection.ProtocolProjector;
 import org.scribble.protocol.validation.ProtocolValidationManager;

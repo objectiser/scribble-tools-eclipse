@@ -277,8 +277,7 @@ public class ProtocolEditor extends TextEditor {
 	 * @param required the required type
 	 * @return an adapter for the required type or <code>null</code>
 	 */ 
-	@SuppressWarnings("unchecked")
-	public Object getAdapter(Class required) {
+	public Object getAdapter(@SuppressWarnings("rawtypes") Class required) {
 		if (IContentOutlinePage.class.equals(required)) {
 			if (fOutlinePage == null) {
 				fOutlinePage= new ScribbleContentOutlinePage(getDocumentProvider(), this);
