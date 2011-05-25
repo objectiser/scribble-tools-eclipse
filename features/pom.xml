@@ -49,8 +49,8 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
       <version>${scribble.bundles.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.scribble.runtime.cli</groupId>
-      <artifactId>scribble-commands</artifactId>
+      <groupId>org.scribble.bundles</groupId>
+      <artifactId>org.scribble.command</artifactId>
       <version>${scribble.bundles.version}</version>
     </dependency>
   </dependencies>
