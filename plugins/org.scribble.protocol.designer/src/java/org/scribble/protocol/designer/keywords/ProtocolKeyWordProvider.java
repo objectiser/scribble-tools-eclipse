@@ -28,20 +28,17 @@ public class ProtocolKeyWordProvider extends DefaultKeyWordProvider {
 		"import",
 		"protocol",
 		"role",
+		"introduces",
 		"from",
 		"to",
-		"par",
+		"parallel",
 		"and",
 		"choice",
 		"repeat",
 		"run",
-		"try",
-		"catch",
-		
-		// Unsupported
+		"include",
+		"do",
 		"interrupt",
-		"request",
-		"replyTo",
-		"raise"
+		"end"
 	};
 }
