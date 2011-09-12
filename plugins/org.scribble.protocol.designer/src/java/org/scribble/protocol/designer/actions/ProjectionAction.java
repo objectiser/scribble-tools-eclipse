@@ -61,7 +61,7 @@ public class ProjectionAction implements IObjectActionDelegate {
 					
 					FileContent content=new FileContent(((IFile)res).getProjectRelativePath().toFile());
 					
-					model = DesignerServices.getParserManager().parse(content, journal, null);
+					model = DesignerServices.getParserManager().parse(null, content, journal);
 			
 					if (model == null || journal.hasErrors()) {
 						error("Cannot project '"+((IFile)res).getName()+"' due to errors", null);
@@ -99,9 +99,10 @@ public class ProjectionAction implements IObjectActionDelegate {
     	for (Role role : roles) {
 			CachedJournal journal=new CachedJournal();
 			
-			ProtocolModel projection=DesignerServices.getProtocolProjector().project(pm, role, journal,
+			ProtocolModel projection=DesignerServices.getProtocolProjector().project(
 					new DefaultProtocolContext(DesignerServices.getParserManager(),
-							new DefaultResourceLocator(file.getFullPath().toFile().getParentFile())));
+					new DefaultResourceLocator(file.getFullPath().toFile().getParentFile())),
+					pm, role, journal);
 			
 			if (projection != null || journal.hasErrors()) {
 				// Get text exporter

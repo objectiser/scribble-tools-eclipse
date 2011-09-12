@@ -56,7 +56,7 @@ public class SimulateAction implements IObjectActionDelegate {
 					
 					FileContent content=new FileContent(((IFile)res).getProjectRelativePath().toFile());
 								
-					model = DesignerServices.getParserManager().parse(content, journal, null);
+					model = DesignerServices.getParserManager().parse(null, content, journal);
 					
 					if (model == null || journal.hasErrors()) {
 						error("Cannot simulate '"+((IFile)res).getName()+"' due to errors", null);
