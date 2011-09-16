@@ -3,10 +3,10 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.scribble</groupId>
-	<artifactId>tools</artifactId>
+	<artifactId>tools-eclipse</artifactId>
 	<packaging>pom</packaging>
 	<version>2.0.0-SNAPSHOT</version>
-	<name>Scribble::Tools</name>
+	<name>Scribble::ToolsEclipse</name>
 
 	<!-- use JBoss Tools' trunk/build/parent/pom.xml - must be built locally first! 
 	     Then, build like this to suck in latest pi4soa + target-platform:
@@ -28,6 +28,7 @@
 		<junit.version>4.7</junit.version>
 		<activemq.version>5.3.0</activemq.version>
     		<tychoVersion>0.12.0</tychoVersion>
+		<BUILD_ALIAS>M7</BUILD_ALIAS>
 	</properties>
 
 	<modules>
