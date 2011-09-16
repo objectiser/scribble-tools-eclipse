@@ -19,24 +19,42 @@ package org.scribble.protocol.designer.editor;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-public class ProtocolEditorMessages {
+/**
+ * Protocol editor messages.
+ *
+ */
+public final class ProtocolEditorMessages {
 
-	private static final String RESOURCE_BUNDLE= "org.scribble.protocol.designer.editor.ProtocolEditorMessages";//$NON-NLS-1$
+    private static final String RESOURCE_BUNDLE= "org.scribble.protocol.designer.editor.ProtocolEditorMessages";
 
-	private static ResourceBundle fgResourceBundle= ResourceBundle.getBundle(RESOURCE_BUNDLE);
+    private static ResourceBundle fgResourceBundle= ResourceBundle.getBundle(RESOURCE_BUNDLE);
 
-	private ProtocolEditorMessages() {
-	}
+    /**
+     * Default constructor.
+     */
+    private ProtocolEditorMessages() {
+    }
 
-	public static String getString(String key) {
-		try {
-			return fgResourceBundle.getString(key);
-		} catch (MissingResourceException e) {
-			return "!" + key + "!";//$NON-NLS-2$ //$NON-NLS-1$
-		}
-	}
-	
-	public static ResourceBundle getResourceBundle() {
-		return fgResourceBundle;
-	}
+    /**
+     * Get the property for the key.
+     * 
+     * @param key The key
+     * @return The value
+     */
+    public static String getString(String key) {
+        try {
+            return fgResourceBundle.getString(key);
+        } catch (MissingResourceException e) {
+            return "!" + key + "!";
+        }
+    }
+    
+    /**
+     * Get the resource bundle.
+     * 
+     * @return The resource bundle
+     */
+    public static ResourceBundle getResourceBundle() {
+        return fgResourceBundle;
+    }
 }

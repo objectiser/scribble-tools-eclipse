@@ -17,16 +17,34 @@
 package org.scribble.protocol.designer.preferences;
 
 /**
- * Constant definitions for plug-in preferences
+ * Constant definitions for plug-in preferences.
  */
-public class PreferenceConstants {
+public final class PreferenceConstants {
 
-	public static final String P_PATH = "pathPreference";
+    /**
+     * Private constructor.
+     */
+    private PreferenceConstants() {
+    }
+    
+    /**
+     * Path preference.
+     */
+    public static final String P_PATH = "pathPreference";
 
-	public static final String P_BOOLEAN = "booleanPreference";
+    /**
+     * Boolean preference.
+     */
+    public static final String P_BOOLEAN = "booleanPreference";
 
-	public static final String P_CHOICE = "choicePreference";
+    /**
+     * Choice preference.
+     */
+    public static final String P_CHOICE = "choicePreference";
 
-	public static final String P_STRING = "stringPreference";
-	
+    /**
+     * String preference.
+     */
+    public static final String P_STRING = "stringPreference";
+    
 }

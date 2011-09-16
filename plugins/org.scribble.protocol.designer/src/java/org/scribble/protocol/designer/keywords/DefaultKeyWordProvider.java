@@ -21,43 +21,44 @@ package org.scribble.protocol.designer.keywords;
  * represent.
  */
 public class DefaultKeyWordProvider implements KeyWordProvider {
+    
+    private String[] _keywords=null;
 
-	/**
-	 * This is the constructor for the default keyword provider. This
-	 * construct is supplied the list of keywords it represents.
-	 * 
-	 * @param keywords The list of keywords
-	 */
-	public DefaultKeyWordProvider(String[] keywords) {
-		m_keywords = keywords;
-	}
-	
-	/**
-	 * This method returns the list of keywords.
-	 * 
-	 * @return The list of keywords
-	 */
-	public String[] getKeyWords() {
-		return(m_keywords);
-	}
+    /**
+     * This is the constructor for the default keyword provider. This
+     * construct is supplied the list of keywords it represents.
+     * 
+     * @param keywords The list of keywords
+     */
+    public DefaultKeyWordProvider(String[] keywords) {
+        _keywords = keywords;
+    }
+    
+    /**
+     * This method returns the list of keywords.
+     * 
+     * @return The list of keywords
+     */
+    public String[] getKeyWords() {
+        return (_keywords);
+    }
 
-	/**
-	 * This method determines whether the supplied value is
-	 * a keyword.
-	 * 
-	 * @return Whether the supplied word is a keyword
-	 */
-	public boolean isKeyWord(String keyword) {
-		boolean ret=false;
-		
-		for (int i=0; ret == false && i < m_keywords.length; i++) {
-			if (keyword.equals(m_keywords[i])) {
-				ret = true;
-			}
-		}
-		
-		return(ret);
-	}
-	
-	private String[] m_keywords=null;
+    /**
+     * This method determines whether the supplied value is
+     * a keyword.
+     * 
+     * @param keyword The keyword
+     * @return Whether the supplied word is a keyword
+     */
+    public boolean isKeyWord(String keyword) {
+        boolean ret=false;
+        
+        for (int i=0; !ret && i < _keywords.length; i++) {
+            if (keyword.equals(_keywords[i])) {
+                ret = true;
+            }
+        }
+        
+        return (ret);
+    }
 }

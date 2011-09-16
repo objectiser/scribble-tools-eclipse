@@ -28,21 +28,21 @@ import org.scribble.protocol.designer.osgi.Activator;
  * 
  */
 public class ScribbleDocumentSetupParticipant implements IDocumentSetupParticipant {
-	
-	/**
-	 */
-	public ScribbleDocumentSetupParticipant() {
-	}
+    
+    /**
+     */
+    public ScribbleDocumentSetupParticipant() {
+    }
 
-	/*
-	 * @see org.eclipse.core.filebuffers.IDocumentSetupParticipant#setup(org.eclipse.jface.text.IDocument)
-	 */
-	public void setup(IDocument document) {
-		if (document instanceof IDocumentExtension3) {
-			IDocumentExtension3 extension3= (IDocumentExtension3) document;
-			IDocumentPartitioner partitioner= new FastPartitioner(Activator.getDefault().getScribblePartitionScanner(), ScribblePartitionScanner.JAVA_PARTITION_TYPES);
-			extension3.setDocumentPartitioner(Activator.SCRIBBLE_PARTITIONING, partitioner);
-			partitioner.connect(document);
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void setup(IDocument document) {
+        if (document instanceof IDocumentExtension3) {
+            IDocumentExtension3 extension3= (IDocumentExtension3) document;
+            IDocumentPartitioner partitioner= new FastPartitioner(Activator.getDefault().getScribblePartitionScanner(), ScribblePartitionScanner.JAVA_PARTITION_TYPES);
+            extension3.setDocumentPartitioner(Activator.SCRIBBLE_PARTITIONING, partitioner);
+            partitioner.connect(document);
+        }
+    }
 }

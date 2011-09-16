@@ -17,7 +17,14 @@
 package org.scribble.protocol.designer.editor;
 
 
-import org.eclipse.jface.text.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextHover;
+import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.jface.text.Region;
 import org.eclipse.swt.graphics.Point;
 
 /**
@@ -26,27 +33,32 @@ import org.eclipse.swt.graphics.Point;
  */
 public class ScribbleTextHover implements ITextHover {
 
-	/* (non-Javadoc)
-	 * Method declared on ITextHover
-	 */
-	public String getHoverInfo(ITextViewer textViewer, IRegion hoverRegion) {
-		if (hoverRegion != null) {
-			try {
-				if (hoverRegion.getLength() > -1)
-					return textViewer.getDocument().get(hoverRegion.getOffset(), hoverRegion.getLength());
-			} catch (BadLocationException x) {
-			}
-		}
-		return ProtocolEditorMessages.getString("JavaTextHover.emptySelection"); //$NON-NLS-1$
-	}
-	
-	/* (non-Javadoc)
-	 * Method declared on ITextHover
-	 */
-	public IRegion getHoverRegion(ITextViewer textViewer, int offset) {
-		Point selection= textViewer.getSelectedRange();
-		if (selection.x <= offset && offset < selection.x + selection.y)
-			return new Region(selection.x, selection.y);
-		return new Region(offset, 0);
-	}
+    private static final Logger LOG=Logger.getLogger(ScribbleTextHover.class.getName());
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String getHoverInfo(ITextViewer textViewer, IRegion hoverRegion) {
+        if (hoverRegion != null) {
+            try {
+                if (hoverRegion.getLength() > -1) {
+                    return textViewer.getDocument().get(hoverRegion.getOffset(), hoverRegion.getLength());
+                }
+            } catch (BadLocationException x) {
+                LOG.log(Level.SEVERE, "Bad location", x);
+            }
+        }
+        return ProtocolEditorMessages.getString("JavaTextHover.emptySelection"); //$NON-NLS-1$
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public IRegion getHoverRegion(ITextViewer textViewer, int offset) {
+        Point selection= textViewer.getSelectedRange();
+        if (selection.x <= offset && offset < selection.x + selection.y) {
+            return new Region(selection.x, selection.y);
+        }
+        return new Region(offset, 0);
+    }
 }

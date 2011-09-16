@@ -23,19 +23,20 @@ package org.scribble.protocol.designer.keywords;
  */
 public interface KeyWordProvider {
 
-	/**
-	 * This method returns the list of keywords.
-	 * 
-	 * @return The list of keywords
-	 */
-	public String[] getKeyWords();
-	
-	/**
-	 * This method determines whether the supplied value is
-	 * a keyword.
-	 * 
-	 * @return Whether the supplied word is a keyword
-	 */
-	public boolean isKeyWord(String keyword);
-	
+    /**
+     * This method returns the list of keywords.
+     * 
+     * @return The list of keywords
+     */
+    public String[] getKeyWords();
+    
+    /**
+     * This method determines whether the supplied value is
+     * a keyword.
+     * 
+     * @param keyword The keyword
+     * @return Whether the supplied word is a keyword
+     */
+    public boolean isKeyWord(String keyword);
+    
 }

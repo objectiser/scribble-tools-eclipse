@@ -35,115 +35,140 @@ import org.scribble.protocol.designer.DesignerServices;
 import org.scribble.protocol.designer.osgi.Activator;
 import org.scribble.protocol.model.ProtocolModel;
 
+/**
+ * This is the simulation action.
+ *
+ */
 public class SimulateAction implements IObjectActionDelegate {
 
-	private ISelection m_selection=null;
-    private IWorkbenchPart m_targetPart=null;
+    private ISelection _selection=null;
+    private IWorkbenchPart _targetPart=null;
 
-	public void run(IAction arg0) {
-		if (m_selection instanceof StructuredSelection) {
-			StructuredSelection sel=(StructuredSelection)m_selection;
-			
-			IResource res=(IResource)sel.getFirstElement();
-			
-			// Obtain the protocol from the resource
-			if (res instanceof IFile) {
+    /**
+     * {@inheritDoc}
+     */
+    public void run(IAction arg0) {
+        if (_selection instanceof StructuredSelection) {
+            StructuredSelection sel=(StructuredSelection)_selection;
+            
+            IResource res=(IResource)sel.getFirstElement();
+            
+            // Obtain the protocol from the resource
+            if (res instanceof IFile) {
 
-				ProtocolModel model=null;
-				
-				try {
-					CachedJournal journal=new CachedJournal();
-					
-					FileContent content=new FileContent(((IFile)res).getProjectRelativePath().toFile());
-								
-					model = DesignerServices.getParserManager().parse(null, content, journal);
-					
-					if (model == null || journal.hasErrors()) {
-						error("Cannot simulate '"+((IFile)res).getName()+"' due to errors", null);
-					} else if (model.isLocated() == false) {
-						error("Cannot simulate '"+((IFile)res).getName()+"' as not a local model", null);
-					} else {
-						simulate(model, (IFile)res);
-					}
-				} catch(Exception e) {
-					error("Failed to parse file '"+((IFile)res).getName()+"'", e);
-				}
-			}
-		}
-	}
+                ProtocolModel model=null;
+                
+                try {
+                    CachedJournal journal=new CachedJournal();
+                    
+                    FileContent content=new FileContent(((IFile)res).getProjectRelativePath().toFile());
+                                
+                    model = DesignerServices.getParserManager().parse(null, content, journal);
+                    
+                    if (model == null || journal.hasErrors()) {
+                        error("Cannot simulate '"+((IFile)res).getName()+"' due to errors", null);
+                    } else if (!model.isLocated()) {
+                        error("Cannot simulate '"+((IFile)res).getName()+"' as not a local model", null);
+                    } else {
+                        simulate(model, (IFile)res);
+                    }
+                } catch (Exception e) {
+                    error("Failed to parse file '"+((IFile)res).getName()+"'", e);
+                }
+            }
+        }
+    }
     
+    /**
+     * Report an error.
+     * 
+     * @param mesg The message
+     * @param exc The exception
+     */
     protected void error(String mesg, Throwable exc) {
-		Activator.logError(mesg, exc);
+        Activator.logError(mesg, exc);
 
-		MessageBox mbox=new MessageBox(m_targetPart.getSite().getShell(),
-				SWT.ICON_ERROR|SWT.OK);
-		
-		if (mesg == null) {
-			mesg = "Null pointer exception has occurred";
-		}
+        MessageBox mbox=new MessageBox(_targetPart.getSite().getShell(),
+                SWT.ICON_ERROR | SWT.OK);
+        
+        if (mesg == null) {
+            mesg = "Null pointer exception has occurred";
+        }
 
-		mbox.setMessage(mesg);
-		mbox.open();
+        mbox.setMessage(mesg);
+        mbox.open();
 
     }
     
+    /**
+     * This method simulates the protocol model.
+     * 
+     * @param pm The protocol model
+     * @param protocolFile The protocol file
+     */
     protected void simulate(ProtocolModel pm, IFile protocolFile) {
-		FileDialog dialog=new FileDialog(m_targetPart.getSite().getShell());
-		
-		dialog.setFilterPath(protocolFile.getParent().getLocation().toOSString());
-		
-		String filename=dialog.open();
-		
-		if (filename != null) {
-			
-			if (filename.endsWith(".events")) {
-				File f=new File(filename);
-				
-				if (f.exists()) {
-					SimulateCommand simulate=new SimulateCommand();
-					
-					CachedJournal journal=new CachedJournal();
-					
-					simulate.setJournal(journal);
-					simulate.setProtocolExportManager(DesignerServices.getProtocolExportManager());
-					simulate.setProtocolMonitor(DesignerServices.getProtocolMonitor());
-					
-					// Not required when directly invoking simulate
-					//simulate.setProtocolParser(DesignerServices.getProtocolParser());
-					
-					simulate.simulate(pm, f);
-					
-					StringBuffer buf=new StringBuffer();
-					
-					for (CachedJournal.IssueDetails issue : journal.getIssues()) {
-						buf.append(issue.getIssueType());
-						buf.append(": ");
-						buf.append(issue.getMessage());
-						buf.append("\r\n");
-					}
-					
-					MessageBox mbox=new MessageBox(m_targetPart.getSite().getShell(),
-							journal.hasErrors()?SWT.ICON_ERROR:
-								journal.hasWarnings()?SWT.ICON_WARNING:
-									SWT.ICON_INFORMATION|SWT.OK);
-					
-					mbox.setMessage(buf.toString());
-					mbox.open();
-				} else {
-					error("File '"+filename+"' does not exist", null);
-				}
-			} else {
-				error("Must select an .events file", null);
-			}
-		}
+        FileDialog dialog=new FileDialog(_targetPart.getSite().getShell());
+        
+        dialog.setFilterPath(protocolFile.getParent().getLocation().toOSString());
+        
+        String filename=dialog.open();
+        
+        if (filename != null) {
+            
+            if (filename.endsWith(".events")) {
+                File f=new File(filename);
+                
+                if (f.exists()) {
+                    SimulateCommand simulate=new SimulateCommand();
+                    
+                    CachedJournal journal=new CachedJournal();
+                    
+                    simulate.setJournal(journal);
+                    simulate.setProtocolExportManager(DesignerServices.getProtocolExportManager());
+                    simulate.setProtocolMonitor(DesignerServices.getProtocolMonitor());
+                    
+                    // Not required when directly invoking simulate
+                    //simulate.setProtocolParser(DesignerServices.getProtocolParser());
+                    
+                    simulate.simulate(pm, f);
+                    
+                    StringBuffer buf=new StringBuffer();
+                    
+                    for (CachedJournal.IssueDetails issue : journal.getIssues()) {
+                        buf.append(issue.getIssueType());
+                        buf.append(": ");
+                        buf.append(issue.getMessage());
+                        buf.append("\r\n");
+                    }
+                    
+                    MessageBox mbox=new MessageBox(_targetPart.getSite().getShell(),
+                            journal.hasErrors() ? SWT.ICON_ERROR 
+                                    : journal.hasWarnings() ? SWT.ICON_WARNING
+                                            : SWT.ICON_INFORMATION | SWT.OK);
+                    
+                    mbox.setMessage(buf.toString());
+                    mbox.open();
+                } else {
+                    error("File '"+filename+"' does not exist", null);
+                }
+            } else {
+                error("Must select an .events file", null);
+            }
+        }
     }
 
-	public void selectionChanged(IAction arg0, ISelection selection) {
-		m_selection = selection;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void selectionChanged(IAction arg0, ISelection selection) {
+        _selection = selection;
+    }
 
-	public void setActivePart(IAction arg0, IWorkbenchPart targetPart) {
-		m_targetPart = targetPart;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void setActivePart(IAction arg0, IWorkbenchPart targetPart) {
+        _targetPart = targetPart;
+    }
 
 }

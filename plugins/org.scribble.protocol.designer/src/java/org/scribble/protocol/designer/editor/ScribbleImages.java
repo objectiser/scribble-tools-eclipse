@@ -23,9 +23,20 @@ import org.eclipse.jface.resource.ImageDescriptor;
  * This class provides access to images configured within the
  * environment.
  */
-public class ScribbleImages {
+public final class ScribbleImages {
 
-	/**
+    private static final String IMAGES_LOCATION = "images/";
+    
+    private static org.eclipse.jface.resource.ImageRegistry registry=
+            new org.eclipse.jface.resource.ImageRegistry();
+
+    /**
+     * Private constructor.
+     */
+    private ScribbleImages() {
+    }
+    
+    /**
      * This method returns the image associated with the
      * supplied name.
      * 
@@ -33,14 +44,14 @@ public class ScribbleImages {
      * @return The image
      */
     public static Image getImage(String name) {
-    	Image ret=null;
-    	
-    	// Make sure the image descriptor is registered
-    	getImageDescriptor(name);
-    	
-    	ret = m_registry.get(name);
-    	
-    	return(ret);
+        Image ret=null;
+        
+        // Make sure the image descriptor is registered
+        getImageDescriptor(name);
+        
+        ret = registry.get(name);
+        
+        return (ret);
     }
     
     /**
@@ -51,20 +62,15 @@ public class ScribbleImages {
      * @return The descriptor
      */
     public static ImageDescriptor getImageDescriptor(String name) {
-    	ImageDescriptor ret=null;
-    	
-    	if ((ret = m_registry.getDescriptor(name)) == null) {
-    	    ret = ImageDescriptor.createFromFile(ScribbleImages.class,
-    	    		IMAGES_LOCATION+name);
-    	    
-    	    m_registry.put(name, ret);
-    	}
-    	
-    	return(ret);
+        ImageDescriptor ret=registry.getDescriptor(name);
+        
+        if (ret == null) {
+            ret = ImageDescriptor.createFromFile(ScribbleImages.class,
+                    IMAGES_LOCATION+name);
+            
+            registry.put(name, ret);
+        }
+        
+        return (ret);
     }
-
-    private static final String IMAGES_LOCATION = "images/";
-    
-    private static org.eclipse.jface.resource.ImageRegistry m_registry=
-    		new org.eclipse.jface.resource.ImageRegistry();
 }

@@ -16,33 +16,40 @@
  */
 package org.scribble.protocol.designer.preferences;
 
-import org.eclipse.jface.preference.*;
-import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.scribble.protocol.designer.osgi.Activator;
 
+/**
+ * Analysis preference page.
+ *
+ */
 public class AnalysisPreferencePage extends FieldEditorPreferencePage
-			implements IWorkbenchPreferencePage {
+            implements IWorkbenchPreferencePage {
 
-	public AnalysisPreferencePage() {
-		super(GRID);
-		setPreferenceStore(Activator.getDefault().getPreferenceStore());
-		setDescription("Scribble analysis preferences");
-	}
-	
-	/**
-	 * Creates the field editors. Field editors are abstractions of
-	 * the common GUI blocks needed to manipulate various types
-	 * of preferences. Each field editor knows how to save and
-	 * restore itself.
-	 */
-	public void createFieldEditors() {
-	}
+    /**
+     * Constructor.
+     */
+    public AnalysisPreferencePage() {
+        super(GRID);
+        setPreferenceStore(Activator.getDefault().getPreferenceStore());
+        setDescription("Scribble analysis preferences");
+    }
+    
+    /**
+     * Creates the field editors. Field editors are abstractions of
+     * the common GUI blocks needed to manipulate various types
+     * of preferences. Each field editor knows how to save and
+     * restore itself.
+     */
+    public void createFieldEditors() {
+    }
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.IWorkbenchPreferencePage#init(org.eclipse.ui.IWorkbench)
-	 */
-	public void init(IWorkbench workbench) {
-	}
-	
+    /**
+     * {@inheritDoc}
+     */
+    public void init(IWorkbench workbench) {
+    }
+    
 }

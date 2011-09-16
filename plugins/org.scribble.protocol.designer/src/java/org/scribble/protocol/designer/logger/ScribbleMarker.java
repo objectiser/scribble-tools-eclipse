@@ -18,8 +18,17 @@ package org.scribble.protocol.designer.logger;
 /**
  * This class contains Scribble Marker definitions.
  */
-public class ScribbleMarker {
+public final class ScribbleMarker {
 
-	public static final String SCRIBBLE_PROBLEM = "org.scribble.ScribbleProblem";
+    /**
+     * Private constructor.
+     */
+    private ScribbleMarker() {
+    }
+    
+    /**
+     * Scribble problem.
+     */
+    public static final String SCRIBBLE_PROBLEM = "org.scribble.ScribbleProblem";
 
 }

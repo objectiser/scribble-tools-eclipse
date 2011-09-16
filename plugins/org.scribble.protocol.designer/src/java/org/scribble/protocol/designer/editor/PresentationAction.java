@@ -27,32 +27,32 @@ import org.eclipse.ui.texteditor.TextEditorAction;
  */
 public class PresentationAction extends TextEditorAction {
 
-	/**
-	 * Constructs and updates the action.
-	 */
-	public PresentationAction() {
-		super(ProtocolEditorMessages.getResourceBundle(), "TogglePresentation.", null); //$NON-NLS-1$
-		update();
-	}
-	
-	/* (non-Javadoc)
-	 * Method declared on IAction
-	 */
-	public void run() {
+    /**
+     * Constructs and updates the action.
+     */
+    public PresentationAction() {
+        super(ProtocolEditorMessages.getResourceBundle(), "TogglePresentation.", null); //$NON-NLS-1$
+        update();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void run() {
 
-		ITextEditor editor= getTextEditor();
+        ITextEditor editor= getTextEditor();
 
-		editor.resetHighlightRange();
-		boolean show= editor.showsHighlightRangeOnly();
-		setChecked(!show);
-		editor.showHighlightRangeOnly(!show);
-	}
-	
-	/* (non-Javadoc)
-	 * Method declared on TextEditorAction
-	 */
-	public void update() {
-		setChecked(getTextEditor() != null && getTextEditor().showsHighlightRangeOnly());
-		setEnabled(true);
-	}
+        editor.resetHighlightRange();
+        boolean show= editor.showsHighlightRangeOnly();
+        setChecked(!show);
+        editor.showHighlightRangeOnly(!show);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void update() {
+        setChecked(getTextEditor() != null && getTextEditor().showsHighlightRangeOnly());
+        setEnabled(true);
+    }
 }

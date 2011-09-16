@@ -27,53 +27,65 @@ import org.scribble.protocol.designer.DesignerServices;
 import org.scribble.protocol.designer.logger.EclipseScribbleLogger;
 import org.scribble.protocol.model.ProtocolModel;
 
+/**
+ * Protocol validator.
+ *
+ */
 public class ProtocolValidator {
-				//extends org.eclipse.wst.validation.AbstractValidator {
+                //extends org.eclipse.wst.validation.AbstractValidator {
 
-	public ProtocolValidator() {
-	}
+    /**
+     * Default constructor.
+     */
+    public ProtocolValidator() {
+    }
 
-	/*
-	public ValidationResult validate(IResource resource, int kind, ValidationState state, IProgressMonitor monitor) {
-		ValidationResult result=super.validate(resource, kind, state, monitor);
+    /*
+    public ValidationResult validate(IResource resource, int kind, ValidationState state, IProgressMonitor monitor) {
+        ValidationResult result=super.validate(resource, kind, state, monitor);
 
-		// TODO: Not currently used. Instead a resource change listener is used to automatically
-		// trigger validation. However if this turns out to be inefficient, or if the WST validator
-		// can be automatically enabled for protocol definitions, then possibly can use the
-		// standard WST approach
-		System.out.println("VALIDATE:" + resource.getFullPath());
-		return(result);
-	}
-	*/
-	
-	public void validateResource(IResource res) {
-		
-		try {
-			EclipseScribbleLogger logger=
-					new EclipseScribbleLogger((IFile)res);
-			
-			FileContent content=new FileContent(((IFile)res).getProjectRelativePath().toFile());
-			
-			DefaultProtocolContext context=new DefaultProtocolContext();
-			context.setProtocolParserManager(DesignerServices.getParserManager());
-			context.setProtocolProjector(DesignerServices.getProtocolProjector());
-			
-			ProtocolModel model=
-				DesignerServices.getParserManager().parse(null, content, logger);
-			
-			// TODO: Check if error occurred during parsing
-			// possibly by using a logger proxy that counts
-			// errors logged
-			if (model != null && logger.hasErrorOccurred() == false) {
-				DesignerServices.getValidationManager().validate(context, model,
-								logger);
-			}
-			
-			logger.finished();
-			
-		} catch(Exception e) {
-			
-			e.printStackTrace();
-		}
-	}
+        // TODO: Not currently used. Instead a resource change listener is used to automatically
+        // trigger validation. However if this turns out to be inefficient, or if the WST validator
+        // can be automatically enabled for protocol definitions, then possibly can use the
+        // standard WST approach
+        System.out.println("VALIDATE:" + resource.getFullPath());
+        return (result);
+    }
+    */
+    
+    /**
+     * This method validates the resource.
+     * 
+     * @param res The resource
+     */
+    public void validateResource(IResource res) {
+        
+        try {
+            EclipseScribbleLogger logger=
+                    new EclipseScribbleLogger((IFile)res);
+            
+            FileContent content=new FileContent(((IFile)res).getProjectRelativePath().toFile());
+            
+            DefaultProtocolContext context=new DefaultProtocolContext();
+            context.setProtocolParserManager(DesignerServices.getParserManager());
+            context.setProtocolProjector(DesignerServices.getProtocolProjector());
+            
+            ProtocolModel model=
+                DesignerServices.getParserManager().parse(null, content, logger);
+            
+            // TODO: Check if error occurred during parsing
+            // possibly by using a logger proxy that counts
+            // errors logged
+            if (model != null && !logger.hasErrorOccurred()) {
+                DesignerServices.getValidationManager().validate(context, model,
+                                logger);
+            }
+            
+            logger.finished();
+            
+        } catch (Exception e) {
+            
+            e.printStackTrace();
+        }
+    }
 }

@@ -17,10 +17,17 @@
 package org.scribble.protocol.designer.editor;
 
 
-import org.eclipse.jface.action.*;
-import org.eclipse.ui.*;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.editors.text.TextEditorActionContributor;
-import org.eclipse.ui.texteditor.*;
+import org.eclipse.ui.texteditor.ITextEditor;
+import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
+import org.eclipse.ui.texteditor.RetargetTextEditorAction;
+import org.eclipse.ui.texteditor.TextEditorAction;
 
 /**
  * Contributes interesting Scribble actions to the desktop's Edit 
@@ -28,70 +35,76 @@ import org.eclipse.ui.texteditor.*;
  */
 public class ScribbleActionContributor extends TextEditorActionContributor {
 
-	protected RetargetTextEditorAction fContentAssistProposal;
-	protected RetargetTextEditorAction fContentAssistTip;
-	protected TextEditorAction fTogglePresentation;
+    private RetargetTextEditorAction _fContentAssistProposal;
+    private RetargetTextEditorAction _fContentAssistTip;
+    private TextEditorAction _fTogglePresentation;
 
-	/**
-	 * Default constructor.
-	 */
-	public ScribbleActionContributor() {
-		super();
-		fContentAssistProposal= new RetargetTextEditorAction(ProtocolEditorMessages.getResourceBundle(), "ContentAssistProposal."); //$NON-NLS-1$
-		fContentAssistProposal.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS); 
-		fContentAssistTip= new RetargetTextEditorAction(ProtocolEditorMessages.getResourceBundle(), "ContentAssistTip."); //$NON-NLS-1$
-		fContentAssistTip.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_CONTEXT_INFORMATION);
-		fTogglePresentation= new PresentationAction();
-	}
-	
-	/*
-	 * @see IEditorActionBarContributor#init(IActionBars)
-	 */
-	public void init(IActionBars bars) {
-		super.init(bars);
-		
-		IMenuManager menuManager= bars.getMenuManager();
-		IMenuManager editMenu= menuManager.findMenuUsingPath(IWorkbenchActionConstants.M_EDIT);
-		if (editMenu != null) {
-			editMenu.add(new Separator());
-			editMenu.add(fContentAssistProposal);
-			editMenu.add(fContentAssistTip);
-		}	
-		
-		IToolBarManager toolBarManager= bars.getToolBarManager();
-		if (toolBarManager != null) {
-			toolBarManager.add(new Separator());
-			toolBarManager.add(fTogglePresentation);
-		}
-	}
-	
-	private void doSetActiveEditor(IEditorPart part) {
-		super.setActiveEditor(part);
+    /**
+     * Default constructor.
+     */
+    public ScribbleActionContributor() {
+        super();
+        _fContentAssistProposal= new RetargetTextEditorAction(ProtocolEditorMessages.getResourceBundle(), "ContentAssistProposal."); //$NON-NLS-1$
+        _fContentAssistProposal.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS); 
+        _fContentAssistTip= new RetargetTextEditorAction(ProtocolEditorMessages.getResourceBundle(), "ContentAssistTip."); //$NON-NLS-1$
+        _fContentAssistTip.setActionDefinitionId(ITextEditorActionDefinitionIds.CONTENT_ASSIST_CONTEXT_INFORMATION);
+        _fTogglePresentation= new PresentationAction();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void init(IActionBars bars) {
+        super.init(bars);
+        
+        IMenuManager menuManager= bars.getMenuManager();
+        IMenuManager editMenu= menuManager.findMenuUsingPath(IWorkbenchActionConstants.M_EDIT);
+        if (editMenu != null) {
+            editMenu.add(new Separator());
+            editMenu.add(_fContentAssistProposal);
+            editMenu.add(_fContentAssistTip);
+        }    
+        
+        IToolBarManager toolBarManager= bars.getToolBarManager();
+        if (toolBarManager != null) {
+            toolBarManager.add(new Separator());
+            toolBarManager.add(_fTogglePresentation);
+        }
+    }
+    
+    /**
+     * Set active editor.
+     * 
+     * @param part The editor part
+     */
+    private void doSetActiveEditor(IEditorPart part) {
+        super.setActiveEditor(part);
 
-		ITextEditor editor= null;
-		if (part instanceof ITextEditor)
-			editor= (ITextEditor) part;
+        ITextEditor editor= null;
+        if (part instanceof ITextEditor) {
+            editor= (ITextEditor) part;
+        }
 
-		fContentAssistProposal.setAction(getAction(editor, "ContentAssistProposal")); //$NON-NLS-1$
-		fContentAssistTip.setAction(getAction(editor, "ContentAssistTip")); //$NON-NLS-1$
+        _fContentAssistProposal.setAction(getAction(editor, "ContentAssistProposal")); //$NON-NLS-1$
+        _fContentAssistTip.setAction(getAction(editor, "ContentAssistTip")); //$NON-NLS-1$
 
-		fTogglePresentation.setEditor(editor);
-		fTogglePresentation.update();
-	}
-	
-	/*
-	 * @see IEditorActionBarContributor#setActiveEditor(IEditorPart)
-	 */
-	public void setActiveEditor(IEditorPart part) {
-		super.setActiveEditor(part);
-		doSetActiveEditor(part);
-	}
-	
-	/*
-	 * @see IEditorActionBarContributor#dispose()
-	 */
-	public void dispose() {
-		doSetActiveEditor(null);
-		super.dispose();
-	}
+        _fTogglePresentation.setEditor(editor);
+        _fTogglePresentation.update();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void setActiveEditor(IEditorPart part) {
+        super.setActiveEditor(part);
+        doSetActiveEditor(part);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void dispose() {
+        doSetActiveEditor(null);
+        super.dispose();
+    }
 }

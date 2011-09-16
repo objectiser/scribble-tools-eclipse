@@ -40,127 +40,152 @@ import org.scribble.protocol.export.text.TextProtocolExporter;
 import org.scribble.protocol.model.ProtocolModel;
 import org.scribble.protocol.model.Role;
 
+/**
+ * This class implements the projection action.
+ *
+ */
 public class ProjectionAction implements IObjectActionDelegate {
 
-	private ISelection m_selection=null;
-    private IWorkbenchPart m_targetPart=null;
+    private ISelection _selection=null;
+    private IWorkbenchPart _targetPart=null;
 
-	public void run(IAction arg0) {
-		if (m_selection instanceof StructuredSelection) {
-			StructuredSelection sel=(StructuredSelection)m_selection;
-			
-			IResource res=(IResource)sel.getFirstElement();
-			
-			// Obtain the protocol from the resource
-			if (res instanceof IFile) {
+    /**
+     * {@inheritDoc}
+     */
+    public void run(IAction arg0) {
+        if (_selection instanceof StructuredSelection) {
+            StructuredSelection sel=(StructuredSelection)_selection;
+            
+            IResource res=(IResource)sel.getFirstElement();
+            
+            // Obtain the protocol from the resource
+            if (res instanceof IFile) {
 
-				ProtocolModel model=null;
-				
-				try {
-					CachedJournal journal=new CachedJournal();
-					
-					FileContent content=new FileContent(((IFile)res).getProjectRelativePath().toFile());
-					
-					model = DesignerServices.getParserManager().parse(null, content, journal);
-			
-					if (model == null || journal.hasErrors()) {
-						error("Cannot project '"+((IFile)res).getName()+"' due to errors", null);
-					} else if (model.isLocated()) {
-						error("Cannot project '"+((IFile)res).getName()+"' as not a global model", null);
-					} else {
-						project(model, (IFile)res);
-					}
-				} catch(Exception e) {
-					error("Failed to parse file '"+((IFile)res).getName()+"'", e);
-				}
-				
-			}
-		}
-	}
+                ProtocolModel model=null;
+                
+                try {
+                    CachedJournal journal=new CachedJournal();
+                    
+                    FileContent content=new FileContent(((IFile)res).getProjectRelativePath().toFile());
+                    
+                    model = DesignerServices.getParserManager().parse(null, content, journal);
+            
+                    if (model == null || journal.hasErrors()) {
+                        error("Cannot project '"+((IFile)res).getName()+"' due to errors", null);
+                    } else if (model.isLocated()) {
+                        error("Cannot project '"+((IFile)res).getName()+"' as not a global model", null);
+                    } else {
+                        project(model, (IFile)res);
+                    }
+                } catch (Exception e) {
+                    error("Failed to parse file '"+((IFile)res).getName()+"'", e);
+                }
+                
+            }
+        }
+    }
     
+    /**
+     * This method reports an error.
+     * 
+     * @param mesg The message
+     * @param exc The exception
+     */
     protected void error(String mesg, Throwable exc) {
-		Activator.logError(mesg, exc);
+        Activator.logError(mesg, exc);
 
-		MessageBox mbox=new MessageBox(m_targetPart.getSite().getShell(),
-				SWT.ICON_ERROR|SWT.OK);
-		
-		if (mesg == null) {
-			mesg = "Null pointer exception has occurred";
-		}
+        MessageBox mbox=new MessageBox(_targetPart.getSite().getShell(),
+                SWT.ICON_ERROR | SWT.OK);
+        
+        if (mesg == null) {
+            mesg = "Null pointer exception has occurred";
+        }
 
-		mbox.setMessage(mesg);
-		mbox.open();
+        mbox.setMessage(mesg);
+        mbox.open();
 
     }
     
+    /**
+     * This method projects the protocol model to the supplied file.
+     * 
+     * @param pm The protocol model
+     * @param file The file
+     */
     protected void project(ProtocolModel pm, IFile file) {
-    	java.util.List<Role> roles=pm.getProtocol().getRoles();
-    	
-    	for (Role role : roles) {
-			CachedJournal journal=new CachedJournal();
-			
-			ProtocolModel projection=DesignerServices.getProtocolProjector().project(
-					new DefaultProtocolContext(DesignerServices.getParserManager(),
-					new DefaultResourceLocator(file.getFullPath().toFile().getParentFile())),
-					pm, role, journal);
-			
-			if (projection != null || journal.hasErrors()) {
-				// Get text exporter
-				ProtocolExporter exporter=new TextProtocolExporter();
-				
-				String filename=file.getName().substring(0,
-						file.getName().length()-file.getFileExtension().length()-1)+
-						"@"+role.getName()+"."+file.getFileExtension();
-				
-				try {
-					IFile locatedFile=file.getParent().getFile(new Path(filename));
-					
-					ByteArrayOutputStream baos=new ByteArrayOutputStream();
-					
-					exporter.export(projection, journal, baos);
-					
-					baos.close();
-					
-					ByteArrayInputStream bais=new ByteArrayInputStream(baos.toByteArray());
-					
-					if (locatedFile.exists() == false) {
-						locatedFile.create(bais, true, null);
-					} else {
-						
-						// Check that the user wishes to overwrite the
-						// existing file
-						MessageBox box=new MessageBox(m_targetPart.getSite().getShell(),
-								SWT.YES|SWT.NO);
-						
-						box.setMessage("Overwrite existing Choreography Description '"+
-								filename+"'?");
-						box.setText("WARNING");
-		
-						if (box.open() == SWT.YES) {						
-							locatedFile.setContents(bais, true, false, null);
-						}
-					}
-					
-					bais.close();
-					
-					if (journal.hasErrors()) {
-						error("Failed to export text of '"+file.getName()+"' and role '"+role+"'", null);
-					}
-				} catch(Exception e) {
-					error("Failed to export text of '"+file.getName()+"' and role '"+role+"'", e);
-				}
-			} else {
-				error("Failed to project '"+file.getName()+"' to role '"+role+"'", null);
-			}
-    	}
+        java.util.List<Role> roles=pm.getProtocol().getRoles();
+        
+        for (Role role : roles) {
+            CachedJournal journal=new CachedJournal();
+            
+            ProtocolModel projection=DesignerServices.getProtocolProjector().project(
+                    new DefaultProtocolContext(DesignerServices.getParserManager(),
+                    new DefaultResourceLocator(file.getFullPath().toFile().getParentFile())),
+                    pm, role, journal);
+            
+            if (projection != null || journal.hasErrors()) {
+                // Get text exporter
+                ProtocolExporter exporter=new TextProtocolExporter();
+                
+                String filename=file.getName().substring(0,
+                        file.getName().length()-file.getFileExtension().length()-1)
+                        +"@"+role.getName()+"."+file.getFileExtension();
+                
+                try {
+                    IFile locatedFile=file.getParent().getFile(new Path(filename));
+                    
+                    ByteArrayOutputStream baos=new ByteArrayOutputStream();
+                    
+                    exporter.export(projection, journal, baos);
+                    
+                    baos.close();
+                    
+                    ByteArrayInputStream bais=new ByteArrayInputStream(baos.toByteArray());
+                    
+                    if (!locatedFile.exists()) {
+                        locatedFile.create(bais, true, null);
+                    } else {
+                        
+                        // Check that the user wishes to overwrite the
+                        // existing file
+                        MessageBox box=new MessageBox(_targetPart.getSite().getShell(),
+                                SWT.YES | SWT.NO);
+                        
+                        box.setMessage("Overwrite existing Choreography Description '"
+                                +filename+"'?");
+                        box.setText("WARNING");
+        
+                        if (box.open() == SWT.YES) {                        
+                            locatedFile.setContents(bais, true, false, null);
+                        }
+                    }
+                    
+                    bais.close();
+                    
+                    if (journal.hasErrors()) {
+                        error("Failed to export text of '"+file.getName()+"' and role '"+role+"'", null);
+                    }
+                } catch (Exception e) {
+                    error("Failed to export text of '"+file.getName()+"' and role '"+role+"'", e);
+                }
+            } else {
+                error("Failed to project '"+file.getName()+"' to role '"+role+"'", null);
+            }
+        }
     }
 
-	public void selectionChanged(IAction arg0, ISelection selection) {
-		m_selection = selection;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void selectionChanged(IAction arg0, ISelection selection) {
+        _selection = selection;
+    }
 
-	public void setActivePart(IAction arg0, IWorkbenchPart targetPart) {
-		m_targetPart = targetPart;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void setActivePart(IAction arg0, IWorkbenchPart targetPart) {
+        _targetPart = targetPart;
+    }
 
 }

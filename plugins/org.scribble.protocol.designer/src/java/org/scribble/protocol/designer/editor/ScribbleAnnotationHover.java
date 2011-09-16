@@ -17,7 +17,12 @@
 package org.scribble.protocol.designer.editor;
 
 
-import org.eclipse.jface.text.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.eclipse.jface.text.BadLocationException;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.source.IAnnotationHover;
 import org.eclipse.jface.text.source.ISourceViewer;
 
@@ -28,18 +33,21 @@ import org.eclipse.jface.text.source.ISourceViewer;
  
 public class ScribbleAnnotationHover implements IAnnotationHover {
 
-	/* (non-Javadoc)
-	 * Method declared on IAnnotationHover
-	 */
-	public String getHoverInfo(ISourceViewer sourceViewer, int lineNumber) {
-		IDocument document= sourceViewer.getDocument();
+    private static final Logger LOG=Logger.getLogger(ScribbleAnnotationHover.class.getName());
+    
+    /**
+     * {@inheritDoc}
+     */
+    public String getHoverInfo(ISourceViewer sourceViewer, int lineNumber) {
+        IDocument document= sourceViewer.getDocument();
 
-		try {
-			IRegion info= document.getLineInformation(lineNumber);
-			return document.get(info.getOffset(), info.getLength());
-		} catch (BadLocationException x) {
-		}
+        try {
+            IRegion info= document.getLineInformation(lineNumber);
+            return document.get(info.getOffset(), info.getLength());
+        } catch (BadLocationException x) {
+            LOG.log(Level.SEVERE, "Failed", x);
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

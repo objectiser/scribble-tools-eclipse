@@ -26,53 +26,112 @@ import org.scribble.protocol.validation.ProtocolValidationManager;
  * by the designer.
  *
  */
-public class DesignerServices {
-	
+public final class DesignerServices {
+
+    /**
+     * Protocol file extension.
+     */
     public static final String PROTOCOL_FILE_EXTENSION = "spr";
 
-	private static ProtocolValidationManager m_validationManager=null;
-	private static ProtocolParserManager m_parserManager=null;
-	private static ProtocolProjector m_protocolProjector=null;
-	private static ProtocolMonitor m_protocolMonitor=null;
-	private static ProtocolExportManager m_protocolExportManager=null;
+    private static ProtocolValidationManager validationManager=null;
+    private static ProtocolParserManager parserManager=null;
+    private static ProtocolProjector protocolProjector=null;
+    private static ProtocolMonitor protocolMonitor=null;
+    private static ProtocolExportManager protocolExportManager=null;
 
-	public static ProtocolValidationManager getValidationManager() {
-		return(m_validationManager);
-	}
-	
-	public static void setValidationManager(ProtocolValidationManager vm) {
-		m_validationManager = vm;
-	}
-	
-	public static ProtocolParserManager getParserManager() {
-		return(m_parserManager);
-	}
-	
-	public static void setParserManager(ProtocolParserManager pm) {
-		m_parserManager = pm;
-	}
-	
-	public static ProtocolMonitor getProtocolMonitor() {
-		return(m_protocolMonitor);
-	}
-	
-	public static void setProtocolMonitor(ProtocolMonitor parser) {
-		m_protocolMonitor = parser;
-	}
-	
-	public static ProtocolProjector getProtocolProjector() {
-		return(m_protocolProjector);
-	}
-	
-	public static void setProtocolProjector(ProtocolProjector projector) {
-		m_protocolProjector = projector;
-	}	
-	
-	public static ProtocolExportManager getProtocolExportManager() {
-		return(m_protocolExportManager);
-	}
-	
-	public static void setProtocolExportManager(ProtocolExportManager pem) {
-		m_protocolExportManager = pem;
-	}	
+    /**
+     * Private constructor.
+     */
+    private DesignerServices() {
+    }
+    
+    /**
+     * This method returns the validation manager.
+     * 
+     * @return The validation manager
+     */
+    public static ProtocolValidationManager getValidationManager() {
+        return (validationManager);
+    }
+    
+    /**
+     * This method sets the validation manager.
+     * 
+     * @param vm The validation manager
+     */
+    public static void setValidationManager(ProtocolValidationManager vm) {
+        validationManager = vm;
+    }
+    
+    /**
+     * This method returns the parser manager.
+     * 
+     * @return The parser manager
+     */
+    public static ProtocolParserManager getParserManager() {
+        return (parserManager);
+    }
+    
+    /**
+     * This method sets the parser manager.
+     * 
+     * @param pm The parser manager
+     */
+    public static void setParserManager(ProtocolParserManager pm) {
+        parserManager = pm;
+    }
+    
+    /**
+     * This method returns the protocol monitor.
+     * 
+     * @return The protocol monitor
+     */
+    public static ProtocolMonitor getProtocolMonitor() {
+        return (protocolMonitor);
+    }
+    
+    /**
+     * This method sets the protocol monitor.
+     * 
+     * @param pm The protocol monitor
+     */
+    public static void setProtocolMonitor(ProtocolMonitor pm) {
+        protocolMonitor = pm;
+    }
+    
+    /**
+     * This method returns the projector.
+     * 
+     * @return The projector
+     */
+    public static ProtocolProjector getProtocolProjector() {
+        return (protocolProjector);
+    }
+    
+    /**
+     * This method sets the projector.
+     * 
+     * @param projector The projector
+     */
+    public static void setProtocolProjector(ProtocolProjector projector) {
+        protocolProjector = projector;
+    }    
+    
+    /**
+     * This method returns the export manager.
+     * 
+     * @return The export manager
+     */
+    public static ProtocolExportManager getProtocolExportManager() {
+        return (protocolExportManager);
+    }
+    
+    /**
+     * This method sets the export manager.
+     * 
+     * @param pem The export manager
+     */
+    public static void setProtocolExportManager(ProtocolExportManager pem) {
+        protocolExportManager = pem;
+    }    
 }

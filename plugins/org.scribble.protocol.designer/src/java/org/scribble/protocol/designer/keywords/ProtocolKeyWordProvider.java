@@ -19,26 +19,29 @@ package org.scribble.protocol.designer.keywords;
  * The protocol notation keyword provider.
  */
 public class ProtocolKeyWordProvider extends DefaultKeyWordProvider {
-	
-	public ProtocolKeyWordProvider() {
-		super(PROTOCOL_KEYWORDS);
-	}
-	
-	private static final String[] PROTOCOL_KEYWORDS={
-		"import",
-		"protocol",
-		"role",
-		"introduces",
-		"from",
-		"to",
-		"parallel",
-		"and",
-		"choice",
-		"repeat",
-		"run",
-		"include",
-		"do",
-		"interrupt",
-		"end"
-	};
+    
+    /**
+     * The default constructor.
+     */
+    public ProtocolKeyWordProvider() {
+        super(PROTOCOL_KEYWORDS);
+    }
+    
+    private static final String[] PROTOCOL_KEYWORDS={
+        "import",
+        "protocol",
+        "role",
+        "introduces",
+        "from",
+        "to",
+        "parallel",
+        "and",
+        "choice",
+        "repeat",
+        "run",
+        "include",
+        "do",
+        "interrupt",
+        "end"
+    };
 }
