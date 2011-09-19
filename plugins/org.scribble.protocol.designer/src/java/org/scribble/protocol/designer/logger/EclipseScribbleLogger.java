@@ -15,6 +15,8 @@
  */
 package org.scribble.protocol.designer.logger;
 
+import java.util.logging.Logger;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.scribble.common.logging.Journal;
@@ -24,6 +26,8 @@ import org.scribble.common.logging.Journal;
  *
  */
 public class EclipseScribbleLogger implements Journal {
+    
+    private static final Logger LOG=Logger.getLogger(EclipseScribbleLogger.class.getName());
 
     private IFile _file=null;
     private boolean _finished=false;
@@ -180,6 +184,11 @@ public class EclipseScribbleLogger implements Journal {
                             throws Exception {
         int endMarkerAfter=-1;
         String contents=null;
+        
+        if (props == null) {
+            LOG.severe("Unable to derive position associated with marker as not properties provided");
+            return;
+        }
         
         if (props.containsKey(START_POSITION)) {
             marker.setAttribute(IMarker.CHAR_START, (Integer)props.get(START_POSITION));

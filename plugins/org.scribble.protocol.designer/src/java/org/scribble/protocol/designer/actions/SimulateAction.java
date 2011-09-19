@@ -61,7 +61,7 @@ public class SimulateAction implements IObjectActionDelegate {
                 try {
                     CachedJournal journal=new CachedJournal();
                     
-                    FileContent content=new FileContent(((IFile)res).getProjectRelativePath().toFile());
+                    FileContent content=new FileContent(((IFile)res).getRawLocation().toFile());
                                 
                     model = DesignerServices.getParserManager().parse(null, content, journal);
                     

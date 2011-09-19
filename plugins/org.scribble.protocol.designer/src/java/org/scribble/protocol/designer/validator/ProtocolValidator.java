@@ -22,7 +22,7 @@ import org.eclipse.core.resources.IResource;
 //import org.eclipse.wst.validation.ValidationResult;
 //import org.eclipse.wst.validation.ValidationState;
 import org.scribble.common.resource.FileContent;
-import org.scribble.protocol.DefaultProtocolContext;
+import org.scribble.protocol.DefaultProtocolTools;
 import org.scribble.protocol.designer.DesignerServices;
 import org.scribble.protocol.designer.logger.EclipseScribbleLogger;
 import org.scribble.protocol.model.ProtocolModel;
@@ -64,10 +64,11 @@ public class ProtocolValidator {
             EclipseScribbleLogger logger=
                     new EclipseScribbleLogger((IFile)res);
             
-            FileContent content=new FileContent(((IFile)res).getProjectRelativePath().toFile());
+            FileContent content=new FileContent(((IFile)res).getRawLocation().toFile());
             
-            DefaultProtocolContext context=new DefaultProtocolContext();
+            DefaultProtocolTools context=new DefaultProtocolTools();
             context.setProtocolParserManager(DesignerServices.getParserManager());
+            context.setProtocolValidationManager(DesignerServices.getValidationManager());
             context.setProtocolProjector(DesignerServices.getProtocolProjector());
             
             ProtocolModel model=

@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  */
 public final class ProtocolEditorMessages {
 
-    private static final String RESOURCE_BUNDLE= "org.scribble.protocol.designer.editor.ProtocolEditorMessages";
+    private static final String RESOURCE_BUNDLE= "org.scribble.protocol.designer.editor.Messages";
 
     private static ResourceBundle fgResourceBundle= ResourceBundle.getBundle(RESOURCE_BUNDLE);
 
