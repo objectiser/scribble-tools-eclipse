@@ -32,7 +32,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.scribble.common.logging.CachedJournal;
 import org.scribble.common.resource.DefaultResourceLocator;
 import org.scribble.common.resource.FileContent;
-import org.scribble.protocol.DefaultProtocolTools;
+import org.scribble.protocol.DefaultProtocolContext;
 import org.scribble.protocol.designer.DesignerServices;
 import org.scribble.protocol.designer.osgi.Activator;
 import org.scribble.protocol.export.ProtocolExporter;
@@ -119,7 +119,7 @@ public class ProjectionAction implements IObjectActionDelegate {
             CachedJournal journal=new CachedJournal();
             
             ProtocolModel projection=DesignerServices.getProtocolProjector().project(
-                    new DefaultProtocolTools(DesignerServices.getParserManager(),
+                    new DefaultProtocolContext(DesignerServices.getParserManager(),
                     new DefaultResourceLocator(file.getFullPath().toFile().getParentFile())),
                     pm, role, journal);
             
