@@ -15,6 +15,8 @@
  */
 package org.scribble.protocol.designer.keywords;
 
+import org.scribble.protocol.ProtocolDefinitions;
+
 /**
  * The protocol notation keyword provider.
  */
@@ -24,27 +26,7 @@ public class ProtocolKeyWordProvider extends DefaultKeyWordProvider {
      * The default constructor.
      */
     public ProtocolKeyWordProvider() {
-        super(PROTOCOL_KEYWORDS);
+        super(ProtocolDefinitions.RESERVED_WORDS);
     }
     
-    private static final String[] PROTOCOL_KEYWORDS={
-        "import",
-        "protocol",
-        "role",
-        "introduces",
-        "at",
-        "from",
-        "to",
-        "unordered",
-        "parallel",
-        "and",
-        "choice",
-        "or",
-        "repeat",
-        "run",
-        "inline",
-        "do",
-        "interrupt",
-        "end"
-    };
 }
