@@ -153,19 +153,6 @@
 		  <updatePolicy>never</updatePolicy>
 		</snapshots>
 	    </repository>
-	    <repository>
-	        <id>scribble-staging</id>
-	        <name>Scribble Staging</name>
-		<url>https://repository.jboss.org/nexus/content/repositories/jboss_thirdparty_releases_staging_profile-021/</url>
-		<releases>
-		  <enabled>true</enabled>
-		  <updatePolicy>never</updatePolicy>
-		</releases>
-		<snapshots>
-		  <enabled>true</enabled>
-		  <updatePolicy>never</updatePolicy>
-		</snapshots>
-	    </repository>
 	</repositories>
 
 </project>
