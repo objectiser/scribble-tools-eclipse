@@ -102,10 +102,6 @@ public class Activator extends AbstractUIPlugin {
             }
         }
 
-        ProtocolValidationManager vm=new DefaultProtocolValidationManager();
-        vm.getValidators().add(new org.scribble.protocol.validation.rules.DefaultProtocolComponentValidator());        
-        DesignerServices.setValidationManager(vm);
-        
         // Obtain reference to protocol parser
         ServiceReference<?> sr=context.getServiceReference(ProtocolParserManager.class.getName());
         ProtocolParserManager pp=null;
@@ -138,7 +134,39 @@ public class Activator extends AbstractUIPlugin {
             }
         }
         
-        // Obtain reference to protocol parser
+        // Obtain reference to protocol validation manager
+        sr=context.getServiceReference(ProtocolValidationManager.class.getName());
+        ProtocolValidationManager pvm=null;
+        if (sr != null) {
+            pvm = (ProtocolValidationManager)context.getService(sr);
+        }            
+        if (pvm != null) {
+            DesignerServices.setValidationManager(pvm);                
+        } else {         
+            ServiceListener sl1 = new ServiceListener() {
+                public void serviceChanged(ServiceEvent ev) {
+                    ServiceReference<?> sr = ev.getServiceReference();
+                    switch(ev.getType()) {
+                    case ServiceEvent.REGISTERED:
+                        ProtocolValidationManager pvm=
+                            (ProtocolValidationManager)context.getService(sr);
+                        DesignerServices.setValidationManager(pvm);
+                        break;
+                    case ServiceEvent.UNREGISTERING:
+                        break;
+                    }
+                }
+            };
+                  
+            String filter1 = "(objectclass=" + ProtocolValidationManager.class.getName() + ")";            
+            try {
+                context.addServiceListener(sl1, filter1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        // Obtain reference to protocol projector
         sr=context.getServiceReference(ProtocolProjector.class.getName());   
         ProtocolProjector ppj=null;        
         if (sr != null) {

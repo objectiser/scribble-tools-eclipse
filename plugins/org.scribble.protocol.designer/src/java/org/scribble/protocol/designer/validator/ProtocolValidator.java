@@ -25,6 +25,7 @@ import org.scribble.common.resource.FileContent;
 import org.scribble.protocol.DefaultProtocolContext;
 import org.scribble.protocol.designer.DesignerServices;
 import org.scribble.protocol.designer.logger.EclipseScribbleLogger;
+import org.scribble.protocol.designer.osgi.Activator;
 import org.scribble.protocol.model.ProtocolModel;
 
 /**
@@ -85,8 +86,7 @@ public class ProtocolValidator {
             logger.finished();
             
         } catch (Exception e) {
-            
-            e.printStackTrace();
+            Activator.logError("Failed to record validation issue on resource '"+res+"'", e);
         }
     }
 }
